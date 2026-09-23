@@ -1,140 +1,127 @@
-from aiogram import Router, types
+from aiogram import Router, Bot, types, F
 from aiogram.filters import CommandStart, Command
+from aiogram.types import FSInputFile
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-
-from config import ADMIN_ID
-from db.database import register_user, has_access, get_progress, get_all_users_for_admin, grant_access
+from config import ADMIN_ID, TARIFFS, PAYMENT_QR_PATH, PAYMENT_SBP_LINK, payment_instructions, COURSE_TITLE
+from db.database import register_user, has_access, get_progress, get_all_users_for_admin, grant_access, has_given_consent, set_selected_tariff
 from lessons.content import total_lessons
+from lessons.legal import CONSENT_TEXT
 
 router = Router()
 
+def _consent_keyboard():
+    kb = InlineKeyboardBuilder()
+    kb.button(text="Оферта", callback_data="show_offer")
+    kb.button(text="Политика данных", callback_data="show_policy")
+    kb.button(text="Принимаю", callback_data="consent_accept")
+    kb.adjust(2, 1)
+    return kb.as_markup()
+
+def _tariff_keyboard():
+    kb = InlineKeyboardBuilder()
+    for key, t in TARIFFS.items():
+        kb.button(text=f"{t['name']} - {t['price']} руб.", callback_data=f"tariff_{key}")
+    kb.adjust(1)
+    return kb.as_markup()
+
+def _payment_keyboard():
+    kb = InlineKeyboardBuilder()
+    kb.button(text="Оплатить по СБП", url=PAYMENT_SBP_LINK)
+    kb.button(text="Я оплатила", callback_data="i_paid")
+    kb.button(text="Назад к тарифам", callback_data="back_to_tariffs")
+    kb.adjust(1)
+    return kb.as_markup()
+
+async def send_main_menu(bot: Bot, user: types.User):
+    if await has_access(user.id):
+        progress = await get_progress(user.id)
+        lesson = progress["current_lesson"]
+        hw_status = progress["homework_status"]
+        status_text = ""
+        if hw_status == "waiting":
+            status_text = "\n\nТвоё домашнее задание ожидает проверки."
+        elif hw_status == "revision":
+            status_text = "\n\nКуратор попросил доработать ДЗ."
+        elif hw_status == "approved":
+            status_text = "\n\nДЗ принято! Жди следующий урок."
+        await bot.send_message(user.id, f"С возвращением, {user.first_name}!\n\nТекущий урок: {lesson} из {total_lessons()}{status_text}")
+        return
+    await bot.send_message(user.id, f"Привет, {user.first_name}!\n\nДобро пожаловать на курс {COURSE_TITLE}\n\nВыбери тариф:", reply_markup=_tariff_keyboard())
 
 @router.message(CommandStart())
 async def cmd_start(message: types.Message):
     user = message.from_user
     await register_user(user.id, user.username or "", user.full_name)
+    if not await has_given_consent(user.id):
+        await message.answer(CONSENT_TEXT, reply_markup=_consent_keyboard(), disable_web_page_preview=True)
+        return
+    await send_main_menu(message.bot, user)
 
-    if await has_access(user.id):
-        progress = await get_progress(user.id)
-        lesson = progress["current_lesson"]
-        hw_status = progress["homework_status"]
+@router.callback_query(F.data.startswith("tariff_"))
+async def cb_select_tariff(callback: types.CallbackQuery):
+    tariff_key = callback.data.split("_", 1)[1]
+    if tariff_key not in TARIFFS:
+        await callback.answer("Неизвестный тариф.")
+        return
+    tariff = TARIFFS[tariff_key]
+    try:
+        await callback.message.edit_text(tariff["description"])
+    except Exception:
+        pass
+    await callback.message.answer_photo(FSInputFile(PAYMENT_QR_PATH), caption=payment_instructions(tariff_key), reply_markup=_payment_keyboard())
+    await set_selected_tariff(callback.from_user.id, tariff_key)
+    await callback.answer()
 
-        status_text = ""
-        if hw_status == "waiting":
-            status_text = "\n\n⏳ Твоё домашнее задание ожидает проверки."
-        elif hw_status == "revision":
-            status_text = "\n\n🔄 Куратор попросил доработать ДЗ. Отправь исправленную версию."
-        elif hw_status == "approved":
-            status_text = "\n\n✅ ДЗ принято! Следующий урок придёт в воскресенье."
-
-        await message.answer(
-            f"👋 С возвращением, {user.first_name}!\n\n"
-            f"📚 Текущий урок: {lesson} из {total_lessons()}{status_text}\n\n"
-            f"Используй /status для подробной информации.",
-            parse_mode="Markdown"
-        )
-    else:
-        await message.answer(
-            f"👋 Привет, {user.first_name}!\n\n"
-            f"Добро пожаловать на курс *{chr(171)}Beauty Marketing{chr(187)}*\n\n"
-            f"После оплаты на сайте куратор откроет тебе доступ — "
-            f"и в воскресенье придёт первый урок!\n\n"
-            f"🌐 ras4eshi.ru/beautymarketing",
-            parse_mode="Markdown"
-        )
-
+@router.callback_query(F.data == "back_to_tariffs")
+async def cb_back_to_tariffs(callback: types.CallbackQuery):
+    try:
+        await callback.message.delete()
+    except Exception:
+        pass
+    await callback.message.answer("Выбери тариф:", reply_markup=_tariff_keyboard())
+    await callback.answer()
 
 @router.message(Command("status"))
 async def cmd_status(message: types.Message):
     user_id = message.from_user.id
     if not await has_access(user_id):
-        await message.answer("❌ У тебя нет доступа к курсу.")
+        await message.answer("Нет доступа. Напиши /start чтобы выбрать тариф.")
         return
-
     progress = await get_progress(user_id)
     lesson = progress["current_lesson"]
     hw_status = progress["homework_status"]
-
-    hw_map = {
-        "none": "📝 Жди воскресенья — придёт новый урок",
-        "waiting": "⏳ ДЗ отправлено, ожидает проверки куратора",
-        "revision": "🔄 Нужна доработка — проверь комментарий куратора",
-        "approved": "✅ ДЗ принято! Следующий урок придёт в воскресенье",
-    }
-
-    await message.answer(
-        f"📊 *Твой прогресс:*\n\n"
-        f"📚 Урок: {lesson} из {total_lessons()}\n"
-        f"🏠 Статус ДЗ: {hw_map.get(hw_status, '—')}\n\n"
-        f"Уроки приходят каждое воскресенье в 10:00 МСК.",
-        parse_mode="Markdown"
-    )
-
-
-# ── КОМАНДЫ АДМИНИСТРАТОРА ────────────────────────────────────────────
+    hw_map = {"none": "Жди следующего урока", "waiting": "ДЗ ожидает проверки", "revision": "Нужна доработка", "approved": "ДЗ принято!"}
+    await message.answer(f"Прогресс:\n\nУрок: {lesson} из {total_lessons()}\nДЗ: {hw_map.get(hw_status, '-')}")
 
 @router.message(Command("grant"))
 async def cmd_grant(message: types.Message):
-    """Открыть доступ ученику. Использование: /grant 123456789"""
     if message.from_user.id != ADMIN_ID:
         return
-
     parts = message.text.split()
     if len(parts) < 2:
-        await message.answer(
-            "Использование: /grant [user_id]\n\n"
-            "Пример: /grant 123456789\n\n"
-            "User ID ученика можно узнать когда он напишет боту — "
-            "бот пришлёт тебе уведомление."
-        )
+        await message.answer("Использование: /grant [user_id]")
         return
-
     try:
         target_id = int(parts[1])
     except ValueError:
-        await message.answer("❌ Неверный формат. Укажи числовой ID.")
+        await message.answer("Неверный ID.")
         return
-
     await grant_access(target_id)
-    await message.answer(f"✅ Доступ открыт для пользователя {target_id}.\nПервый урок придёт в ближайшее воскресенье.")
-
-    # Уведомляем ученика
-    try:
-        await message.bot.send_message(
-            target_id,
-            "🎉 *Доступ к курсу открыт!*\n\n"
-            "Добро пожаловать на курс Beauty Marketing!\n\n"
-            "📅 Первый урок придёт в *воскресенье в 10:00 МСК*.\n"
-            "До встречи! 👋",
-            parse_mode="Markdown"
-        )
-    except Exception:
-        await message.answer("⚠️ Не удалось уведомить ученика (возможно, не писал боту).")
-
+    await message.answer(f"Доступ открыт для {target_id}.")
+    from handlers.lessons import send_lesson_to_user
+    await send_lesson_to_user(message.bot, target_id)
 
 @router.message(Command("students"))
 async def cmd_students(message: types.Message):
-    """Список всех учеников для администратора."""
     if message.from_user.id != ADMIN_ID:
         return
-
     users = await get_all_users_for_admin()
     if not users:
-        await message.answer("Пока нет зарегистрированных пользователей.")
+        await message.answer("Пока нет пользователей.")
         return
-
-    lines = ["👥 *Список учеников:*\n"]
+    lines = ["Список учеников:\n"]
     for u in users:
-        access = "✅" if u["has_access"] else "❌"
+        access = "+" if u["has_access"] else "-"
         name = u["full_name"] or u["username"] or str(u["user_id"])
-        lesson = u["current_lesson"] or 0
-        hw = u["homework_status"] or "—"
-        lines.append(f"{access} {name} | Урок {lesson} | ДЗ: {hw} | ID: {u['user_id']}")
-
-    await message.answer("\n".join(lines), parse_mode="Markdown")
-
-
-@router.message(Command("newuser"))
-async def notify_admin_new_user(message: types.Message):
-    """Ученик написал боту впервые — сообщаем администратору."""
-    pass  # реализовано в middleware
+        lines.append(f"{access} {name} | Урок {u['current_lesson'] or 0} | ID: {u['user_id']}")
+    await message.answer("\n".join(lines))
