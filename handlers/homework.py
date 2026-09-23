@@ -28,7 +28,7 @@ async def handle_hw_submission(message: types.Message, content_type: str,
     if not await has_access(user_id):
         await message.answer(
             "❌ У тебя нет доступа к курсу.\n\n"
-            "Оплати курс на сайте ras4eshi.ru/beautymarketing — "
+            "Оплати курс на сайте ras4eshi.me/beautymarketing — "
             "куратор откроет доступ в течение дня 💛"
         )
         return
