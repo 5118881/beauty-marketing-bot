@@ -9,6 +9,8 @@ LESSONS = [
         "number": 1,
         "title": "Урок 1: Введение в стратегический маркетинг",
         "video_file_id": None,
+        "presentation_url": "https://drive.google.com/file/d/1CfBHGyY02Cs8fOagQusJXKG6OEijuUZE/view?usp=sharing",
+        "video_url": "https://rutube.ru/video/private/d6a849b9041afd5d6343a83e302b4593/?p=CHbFmlAoaydI_CXRZaFKMg",
         "text": (
             "🌸 *Урок 1: Введение в стратегический маркетинг*\n\n"
             "Привет! Я рада приветствовать тебя на курсе *Стратегический Маркетинг "
@@ -66,6 +68,8 @@ LESSONS = [
         "number": 2,
         "title": "Урок 2: SWOT-анализ и маркетинговый минимум",
         "video_file_id": None,
+        "presentation_url": "https://drive.google.com/file/d/1EjC-6Ty6CFOaiyJnevEqpmL6_CmPM23x/view?usp=sharing",
+        "video_url": "https://rutube.ru/video/private/1b4967a5fcf6197b2b9ca22aa3bf987d/?p=wcSdK4X6mXm7KjbJbeH_HA",
         "text": (
             "📊 *Урок 2: SWOT-анализ и маркетинговый минимум*\n\n"
             "Маркетинг — это не прямые продажи, а смыслы, которые ты вкладываешь "
@@ -94,7 +98,7 @@ LESSONS = [
             "Сильное позиционирование защищает от всех угроз!"
         ),
         "materials": [],
-        "hw_template": "",
+        "hw_template": "https://drive.google.com/file/d/16vhEGvls33HSRHT8kVscSEF4zYmtY_bU/view?usp=sharing",
         "homework_task": (
             "📝 *Домашнее задание — урок 2:*\n\n"
             "1️⃣ Заполни *«Портрет потребителя»*:\n"
@@ -121,6 +125,8 @@ LESSONS = [
         "number": 3,
         "title": "Урок 3: Целевой сегмент и теория поколений",
         "video_file_id": None,
+        "presentation_url": "https://drive.google.com/file/d/1R_5UXwdbSNh8ul2PQOt5Y8WriXIoUMlV/view?usp=sharing",
+        "video_url": "https://rutube.ru/video/private/02014914df2c8bbe6c8c3c7e2c8d7f43/?p=DQv7gCjWGdpD9uhuuawKuQ",
         "text": (
             "👥 *Урок 3: Целевой сегмент и теория поколений*\n\n"
             "Ориентироваться на всех — стратегия проигравших. "
@@ -146,7 +152,7 @@ LESSONS = [
             "и превзойти их ожидания!"
         ),
         "materials": [],
-        "hw_template": "",
+        "hw_template": "https://drive.google.com/file/d/1Uyk1lRd72hVewtA_5NxBisktG0HYBhmC/view?usp=sharing",
         "homework_task": (
             "📝 *Домашнее задание — урок 3:*\n\n"
             "Заполни две таблицы:\n\n"
@@ -175,6 +181,8 @@ LESSONS = [
         "number": 4,
         "title": "Урок 4: Анализ конкурентов и карта рынка",
         "video_file_id": None,
+        "presentation_url": "https://drive.google.com/file/d/1WJCq5_pmArhIGc_zy_vGAcE9LCzt5Fjx/view?usp=sharing",
+        "video_url": "https://rutube.ru/video/private/49aeb7723e361bdbdbbc87d977f282ca/?p=QCy8AlnLRLrJ-F4By97yZg",
         "text": (
             "🔍 *Урок 4: Анализ конкурентов и карта рынка*\n\n"
             "Большинство анализируют конкурентов так: пришёл, скопировал прайс. "
@@ -202,7 +210,7 @@ LESSONS = [
             "Сильное позиционирование убирает необходимость снижать цены."
         ),
         "materials": [],
-        "hw_template": "",
+        "hw_template": "https://drive.google.com/file/d/1V0UdQF_4gcXNUJu61dH3hxNccSSvMrfS/view?usp=sharing",
         "homework_task": (
             "📝 *Домашнее задание — урок 4:*\n\n"
             "Возьми радиус 1 км от своего салона:\n\n"
@@ -231,6 +239,8 @@ LESSONS = [
         "number": 5,
         "title": "Урок 5: Конкурентное преимущество — VRIO",
         "video_file_id": None,
+        "presentation_url": "https://drive.google.com/file/d/1dk6A4eC0x4YHkruMQv2gXS02IqPLMYvM/view?usp=sharing",
+        "video_url": "https://rutube.ru/video/private/97dcd5e2d3ef56414b998c3337102523/?p=_iAaI-TAZ8heElssEMBV1w",
         "text": (
             "🏆 *Урок 5: Конкурентное преимущество — VRIO-анализ*\n\n"
             "Самый сложный и самый важный урок курса. "
@@ -257,7 +267,7 @@ LESSONS = [
             "❌ *Скидки и акции* → Конкурентный недостаток — убираем!"
         ),
         "materials": [],
-        "hw_template": "",
+        "hw_template": "https://drive.google.com/file/d/1DQ6DxyfOK-soS7bFmzl54KUq2yTABpBb/view?usp=sharing",
         "homework_task": (
             "📝 *Домашнее задание — урок 5:*\n\n"
             "Заполни таблицу VRIO:\n\n"
@@ -287,6 +297,8 @@ LESSONS = [
         "number": 6,
         "title": "Урок 6: Позиционирование бренда",
         "video_file_id": None,
+        "presentation_url": "https://drive.google.com/file/d/1fPghZVhQoK2k31BGqx3qzDM2QhGUVv1w/view?usp=sharing",
+        "video_url": "https://rutube.ru/video/private/9ab0013962d21858c12af5757eef71eb/?p=v6Vf3t9QRidVQIK0d-pxqQ",
         "text": (
             "🎯 *Урок 6: Позиционирование бренда*\n\n"
             "Позиционирование — создание уникального образа бренда в глазах ЦА. "
@@ -318,7 +330,7 @@ LESSONS = [
             "• Можешь ли быть единственной обладательницей этого позиционирования?"
         ),
         "materials": [],
-        "hw_template": "",
+        "hw_template": "https://drive.google.com/file/d/1eXvo6DoTvbVCt7TgmF6XdvpMvGlFv7O8/view?usp=sharing",
         "homework_task": (
             "📝 *Домашнее задание — урок 6:*\n\n"
             "1️⃣ Сформулируй позиционирование по формуле:\n"
@@ -346,6 +358,8 @@ LESSONS = [
         "number": 7,
         "title": "Урок 7: Анализ бренда и маркетинговые цели",
         "video_file_id": None,
+        "presentation_url": "https://drive.google.com/file/d/1UeZKnWdeJfYBec0JV0NgVHgdi2a6ewIm/view?usp=sharing",
+        "video_url": "https://rutube.ru/video/private/ab748b46ac0bbd70b47e66345e0f0f38/?p=Sjh1gFmCp3uT3I5VK3Rbzw",
         "text": (
             "📈 *Урок 7: Анализ бренда и маркетинговые цели*\n\n"
             "Маркетинговые цели — конкретные результаты, которых хочет достичь "
@@ -374,7 +388,7 @@ LESSONS = [
             "• Оборот одного филиала: 3,2 → 3,8 млн ₽ к октябрю"
         ),
         "materials": [],
-        "hw_template": "",
+        "hw_template": "https://drive.google.com/file/d/15nNU8ABDqSjBjJ5oeYcwJtn7ojww9n84/view?usp=sharing",
         "homework_task": (
             "📝 *Домашнее задание — урок 7:*\n\n"
             "1️⃣ *Розничный аудит* — основные услуги, мин/макс цена, средний чек\n\n"
@@ -402,6 +416,8 @@ LESSONS = [
         "number": 8,
         "title": "Урок 8: Реклама — каналы для бьюти-бизнеса",
         "video_file_id": None,
+        "presentation_url": "https://drive.google.com/file/d/1KLVq-TkHhidW1xi3iRJOzQPenFzNae6n/view?usp=sharing",
+        "video_url": "https://rutube.ru/video/private/81d256c8ed9bb0efc3041cd1d97b2f96/?p=ij77RsZe13yHI3DaGQX7Vg",
         "text": (
             "📣 *Урок 8: Реклама — каналы для бьюти-бизнеса*\n\n"
             "Нет клиентов — платишь зарплату из кармана. "
@@ -428,12 +444,13 @@ LESSONS = [
             "50 новых клиентов с одной рассылки!\n\n"
             "*Reels/YouTube Shorts:* единственный бесплатный способ роста. "
             "Снимай и дублируй везде.\n\n"
+            "*Авито:* отличный канал для поиска мастеров через вакансии и для привлечения клиентов — объявление об услугах в своём районе работает на тёплую аудиторию.\n\n"
             "*ВАУ-маркетинг:* делай больше ожиданий — и клиент сам сделает рекламу!\n\n"
             "💡 *Правило:* отталкивайся от того, что уже развито. "
             "Лучше один канал на 100% — чем все на 10%."
         ),
         "materials": [],
-        "hw_template": "",
+        "hw_template": "https://drive.google.com/file/d/1Atw6dHaL_Aw7E9LZ91Hc3VHp1WU2g9vk/view?usp=sharing",
         "homework_task": (
             "📝 *Домашнее задание — урок 8:*\n\n"
             "1️⃣ Определи один канал, который уже развит:\n"
@@ -463,6 +480,8 @@ LESSONS = [
         "number": 9,
         "title": "Урок 9: Маркетинговый микс (7P)",
         "video_file_id": None,
+        "presentation_url": "https://drive.google.com/file/d/1oupHm7vjBDjvqED9rIudXrJkX-zRFJZO/view?usp=sharing",
+        "video_url": "https://rutube.ru/video/private/937d5a3bffad8a1ab0b6a333d2f78e12/?p=NxMHDJ9wxYBHB8ZcRWqOdA",
         "text": (
             "🔧 *Урок 9: Маркетинговый микс (7P)*\n\n"
             "Маркетинг-микс — рабочий набор тактических решений. "
@@ -491,7 +510,7 @@ LESSONS = [
             "= огромный рост за год!"
         ),
         "materials": [],
-        "hw_template": "",
+        "hw_template": "https://drive.google.com/file/d/15EQFQ-Rff5mvGyYfWXMdUnwqZ9G2sAps/view?usp=sharing",
         "homework_task": (
             "📝 *Домашнее задание — урок 9:*\n\n"
             "Заполни таблицу *«Маркетинговый микс»* по всем 7 элементам:\n\n"
@@ -521,6 +540,8 @@ LESSONS = [
         "number": 10,
         "title": "Урок 10: Маркетинговая стратегия на 3 месяца",
         "video_file_id": None,
+        "presentation_url": "https://drive.google.com/file/d/1Xy_z8dw2WWB9jC8gnpaVenGiQ-ZBXLWW/view?usp=sharing",
+        "video_url": "https://rutube.ru/video/private/c2c1adf59a575d4c4c6e129419e0b213/?p=qWKjlAwe2rO3yZ3-NiQZwA",
         "text": (
             "🚀 *Урок 10: Маркетинговая стратегия на 3 месяца*\n\n"
             "Финал! Сегодня создаём твою маркетинговую стратегию. "
@@ -552,7 +573,7 @@ LESSONS = [
             "• Доля потерянных клиентов снизилась до Z%"
         ),
         "materials": [],
-        "hw_template": "",
+        "hw_template": "https://drive.google.com/file/d/15EQFQ-Rff5mvGyYfWXMdUnwqZ9G2sAps/view?usp=sharing",
         "homework_task": (
             "📝 *Финальное домашнее задание — твоя Стратегия:*\n\n"
             "Заполни таблицу на 3 месяца (по неделям):\n\n"
