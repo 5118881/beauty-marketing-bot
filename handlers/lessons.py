@@ -83,13 +83,40 @@ async def _send_full_lesson(bot: Bot, user_id: int, lesson: dict):
             parse_mode="Markdown"
         )
         await asyncio.sleep(1)
+    elif lesson.get("video_url"):
+        from aiogram.utils.keyboard import InlineKeyboardBuilder as IKB
+        kb = IKB()
+        kb.button(text="▶️ Смотреть урок на RuTube", url=lesson["video_url"])
+        kb.adjust(1)
+        await bot.send_message(
+            user_id,
+            f"🎬 *{lesson['title']}*\n\n"
+            f"Видеоурок готов! Нажми кнопку ниже, посмотри — "
+            f"и возвращайся: конспект и домашнее задание ждут тебя здесь 👇",
+            parse_mode="Markdown",
+            reply_markup=kb.as_markup()
+        )
+        await asyncio.sleep(1)
     else:
-        # Если видео ещё нет — заглушка
         await bot.send_message(
             user_id,
             "🎬 *Видеоурок скоро появится здесь*\n\n"
             "Пока читай конспект ниже — там всё самое важное!",
             parse_mode="Markdown"
+        )
+        await asyncio.sleep(1)
+
+    # ── 2.5 Презентация ──────────────────────────────────────────────────
+    if lesson.get("presentation_url"):
+        from aiogram.utils.keyboard import InlineKeyboardBuilder as IKB2
+        kb_pdf = IKB2()
+        kb_pdf.button(text="📊 Открыть презентацию", url=lesson["presentation_url"])
+        kb_pdf.adjust(1)
+        await bot.send_message(
+            user_id,
+            "📊 *Конспект урока*\n\nСкачай презентацию — там все ключевые тезисы, таблицы и примеры из урока 👇",
+            parse_mode="Markdown",
+            reply_markup=kb_pdf.as_markup()
         )
         await asyncio.sleep(1)
 
